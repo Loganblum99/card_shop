@@ -18,6 +18,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/*
+ * Entity Class for Purchase
+ */
+
 @Entity
 @Data
 public class Purchase {
@@ -40,6 +44,11 @@ public class Purchase {
 	@ManyToOne
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
+	
+	
+	/*
+	 * Join table for Purchase and Card
+	 */
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude

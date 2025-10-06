@@ -13,6 +13,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/*
+ * Entity class for Card
+ */
 
 @Entity
 @Data

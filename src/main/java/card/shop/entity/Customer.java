@@ -11,6 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
+/*
+ * Entity class for Customer
+ */
+
 @Entity
 @Data
 public class Customer {

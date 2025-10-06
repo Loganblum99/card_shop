@@ -19,7 +19,11 @@ import card.shop.dao.PurchaseDao;
 import card.shop.entity.Card;
 import card.shop.entity.Customer;
 import card.shop.entity.Purchase;
+import card.shop.controller.model.PurchaseInfo;
 
+/*
+ * Class to manage the service layer of the API
+ */
 @Service
 public class ShopService {
 	
@@ -30,29 +34,42 @@ public class ShopService {
 	@Autowired
 	private CardDao cardDao;
 	
+	/*
+	 * Method to save the customer. if the id given is null the customer is created. if the id is not null
+	 * the customer is updated
+	 */
+	
 	@Transactional(readOnly = false)
 	public CustomerData saveCustomer(CustomerData customerData) {
 		Customer customer = customerData.toCustomer();
-		
 		Customer dbCustomer = customerDao.save(customer);
-		
 		
 		return new CustomerData(dbCustomer);
 	
 	}
 
+	/*
+	 * Retrieves a single customer by the given ID
+	 */
 	
 	@Transactional(readOnly = true)
 	public CustomerData retrieveCustomerById(Long customerId) {
 		Customer customer = findCustomerById(customerId);
 		return new CustomerData(customer);
 	}
-
+	
+	/*
+	 * Retrieves a customer Entity if it finds a matching ID. Else is throws an exception
+	 */
 
 	private Customer findCustomerById(Long customerId) {
 		return customerDao.findById(customerId).orElseThrow(() -> new NoSuchElementException("Customer with ID=" + customerId + " was not found"));
 	}
 
+	/*
+	 * Retrieves all customers as of list of customer Entities and returns a list of customer data objects
+	 */
+	
 	@Transactional(readOnly = true)
 	public List<CustomerData> retrieveAllCustomers() {
 		List<Customer> customerEntities = customerDao.findAll();
@@ -120,8 +137,22 @@ public class ShopService {
 		return names;
 		
 	}
+	@Transactional(readOnly = true)
+	public Set<Card> retrieveCardsByPurchaseId(Long purchaseId) {
+		Purchase purchase = findPurchaseById(purchaseId);
+		Set<Card> cards = purchase.getCards();
+		return cards;
 
-
+	}
+	@Transactional(readOnly = false)
+	public PurchaseInfoCard saveCard(PurchaseInfoCard purchaseInfoCard) {
+		Card card = purchaseInfoCard.toCard();
+		Card dbCard = cardDao.save(card);
+		
+		return new PurchaseInfoCard(dbCard);
+		
+	}
 	
 
 }
+
